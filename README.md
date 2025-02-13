@@ -11,3 +11,8 @@ docker pull hasura/graphql-data-connector:v2.42.0
 ```bash
 curl -L https://github.com/hasura/graphql-engine/raw/stable/cli/get.sh | bash
 ```
+## set node and yarn
+```bash
+nvm use
+yarn set version classic
+```
