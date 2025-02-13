@@ -13,3 +13,11 @@ hasura metadata apply
 ```sh
 hasura metadata export
 ```
+
+
+## Migrations
+```sh
+hasura migrate create "migration_name" --from-server
+```
+
+
