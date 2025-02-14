@@ -1,9 +1,3 @@
-
-### Apply Migrations
-```sh
-hasura migrate apply
-```
-
 ### Apply Metadata
 ```sh
 hasura metadata apply
@@ -14,10 +8,7 @@ hasura metadata apply
 hasura metadata export
 ```
 
-
-## Migrations
+### update db from source
 ```sh
-hasura migrate create "migration_name" --from-server
+hasura metadata update-remote
 ```
-
-

@@ -4,5 +4,9 @@
   "version": "1.0.0",
   "workspaces": [
     "services/*"
-  ]
+  ],
+  "scripts": {
+    "docker": "docker compose up -d"
+  },
+  "devDependencies": {}
 }
