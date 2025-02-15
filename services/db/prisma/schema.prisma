@@ -22,4 +22,21 @@ model User {
   phone_number        String?
   created_at          DateTime @default(now())
   updated_at          DateTime @updatedAt
+  ratings_created     Rating[] @relation("ratings_created")
+  ratings_received    Rating[] @relation("ratings_received")
+}
+
+model Rating {
+  id            String   @id @default(uuid())
+  created_by    User     @relation("ratings_created", fields: [created_by_id], references: [id])
+  created_by_id String
+  rated_user    User     @relation("ratings_received", fields: [rated_user_id], references: [id])
+  rated_user_id String
+  value         Int
+  comment       String?
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  @@index([created_by_id])
+  @@index([rated_user_id])
 }
