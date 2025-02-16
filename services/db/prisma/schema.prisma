@@ -26,6 +26,17 @@ model User {
   ratings_received    Rating[] @relation("ratings_received")
 }
 
+model City {
+  id         Int                                  @id
+  name       String
+  country    String
+  coords     Unsupported("geometry(Point, 4326)")
+  created_at DateTime                             @default(now())
+  updated_at DateTime                             @updatedAt
+
+  @@index([coords], name: "location_idx", type: Gist)
+}
+
 model Rating {
   id            String   @id @default(uuid())
   created_by    User     @relation("ratings_created", fields: [created_by_id], references: [id])
