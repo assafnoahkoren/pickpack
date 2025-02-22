@@ -1,13 +1,18 @@
 import { Controller, Get } from '@nestjs/common';
-import prisma from '@db/prisma-client';
+import { time } from '@shared/time';
 
-@Controller()
+@Controller({
+  path: 'api/v1/app',
+})
 export class AppController {
   constructor() {}
 
   @Get()
-  async getHello() {
-    const cities = await prisma.city.findMany();
-    return cities.map((city) => city.name).join(', ');
+  async healthCheck() {
+    return {
+      version: '1.0.0',
+      status: 'ok',
+      timestamp: time.now(),
+    };
   }
 }
