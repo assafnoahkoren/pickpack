@@ -1,5 +1,12 @@
 {
+  "ts-node": {
+    "transpileOnly": true,
+    "require": ["tsconfig-paths/register"]
+  },
   "compilerOptions": {
+    "paths": {
+      "@db/*": ["../db/*"]
+    },
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
