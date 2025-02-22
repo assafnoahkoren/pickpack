@@ -4,6 +4,7 @@ import parsePhoneNumber from 'libphonenumber-js'
 import { SmsService } from 'src/services/sms.service';
 import { JwtService } from '@nestjs/jwt';
 import { logger } from '@shared/logger';
+import { time } from '@shared/time';
 
 
 @Injectable()
@@ -32,7 +33,8 @@ export class AuthService {
       isNewUser: isNewUser,
       accessToken: await this.jwtService.signAsync({
         sub: user.id,
-        phoneNumber: user.phone_number
+        phoneNumber: user.phone_number,
+        createdAt: time.now(),
       })
     }
 
