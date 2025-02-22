@@ -93,32 +93,42 @@ Entities:
 - first_name
 - last_name
 - phone_number
+- address
+- city_id: City
 - profile_picture_url
+
+#### UserPreferenceCity
+- user_id: User
+- city_id: City
 
 #### UserLocation
 - user_id: User
-- waypoint: LatLon
+- coords: geometry(point, 4326)
 - last_updated
 - device_id?
 - accuracy?
 - speed?
 
-#### Settlement
+#### City
 - name
-- geo_fence
-
-#### DeliveryStop
-- waypoint: LatLon
-- note
-- sequence
+- country
+- coords: geometry(point, 4326)
 
 #### DeliveryRequest
 - created_by_id: User
-- stops: DeliveryStop
+- from_address: String
+- from_coords: geometry(point, 4326)
+- to_address: String
+- to_coords: geometry(point, 4326)
+- note
+- suggested_price: number
 - due_date: Date
 
-
-
+#### DeliveryRequestCourierMatch
+- delivery_request_id: DeliveryRequest
+- courier_id: User
+- status: DeliveryRequestCourierMatchStatus (unread, read, accepted, rejected)
+- is_taken: boolean
 
 
 
@@ -134,5 +144,7 @@ Entities:
 #### Rating
 - created_by_id: User
 - rated_user_id: User
-- value
-- comment
+- delivery_id: Delivery
+- role: RatingRole (courier, business)
+- value: number
+- comment: String
