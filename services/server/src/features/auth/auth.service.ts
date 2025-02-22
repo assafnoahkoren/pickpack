@@ -2,11 +2,16 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import prisma from '@db/prisma-client';
 import parsePhoneNumber from 'libphonenumber-js'
 import { SmsService } from 'src/services/sms.service';
+import { JwtService } from '@nestjs/jwt';
+import { logger } from '@shared/logger';
 
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly smsService: SmsService) {}
+  constructor(
+    private readonly smsService: SmsService,
+    private readonly jwtService: JwtService
+  ) { }
 
   async verifyPhoneNumber(phoneNumber: string) {
     const parsedPhoneNumber = this.parsePhoneNumber(phoneNumber);
@@ -20,8 +25,16 @@ export class AuthService {
     if (!isValid) {
       throw new UnauthorizedException('Invalid verification code');
     }
-  
-    const user = await this.findOrCreate(parsedPhoneNumber.number);
+
+    const { user, isNewUser } = await this.findOrCreate(parsedPhoneNumber.number);
+    logger.log(`User ${user.phone_number} signed in (${isNewUser ? 'new' : 'existing'})`);
+    return {
+      isNewUser: isNewUser,
+      accessToken: await this.jwtService.signAsync({
+        sub: user.id,
+        phoneNumber: user.phone_number
+      })
+    }
 
   }
 
@@ -36,6 +49,7 @@ export class AuthService {
   }
 
   private async findOrCreate(phoneNumber: string) {
+    let isNewUser = false;
     let user = await prisma.user.findUnique({
       where: { phone_number: phoneNumber },
     });
@@ -44,8 +58,9 @@ export class AuthService {
       user = await prisma.user.create({
         data: { phone_number: phoneNumber },
       });
+      isNewUser = true;
     }
 
-    return user;
+    return { user, isNewUser };
   }
 }
