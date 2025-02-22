@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS postgis;
+
 -- CreateTable
 CREATE TABLE "City" (
     "id" INTEGER NOT NULL,

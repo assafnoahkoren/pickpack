@@ -16,7 +16,7 @@
   },
   "scripts": {
     "studio": "prisma studio",
-    "migrate": "prisma migrate dev --name",
+    "migrate": "prisma migrate dev",
     "generate": "prisma generate",
     "deploy": "prisma migrate deploy"
   }

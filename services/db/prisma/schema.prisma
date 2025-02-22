@@ -15,11 +15,11 @@ datasource db {
 
 model User {
   id                  String   @id @default(uuid())
-  full_name           String
-  profile_picture_url String
-  phone_number        String
-  city_id             Int
-  city                City     @relation(fields: [city_id], references: [id])
+  full_name           String?
+  profile_picture_url String?
+  phone_number        String   @unique
+  city_id             Int?
+  city                City?     @relation(fields: [city_id], references: [id])
   created_at          DateTime @default(now())
   updated_at          DateTime @updatedAt
   ratings_created     Rating[] @relation("ratings_created")
