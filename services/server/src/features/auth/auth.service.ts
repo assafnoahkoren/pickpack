@@ -29,13 +29,20 @@ export class AuthService {
 
     const { user, isNewUser } = await this.findOrCreate(parsedPhoneNumber.number);
     logger.log(`User ${user.phone_number} signed in (${isNewUser ? 'new' : 'existing'})`);
+    const jwt = await this.jwtService.signAsync({
+      sub: user.id,
+      phoneNumber: user.phone_number,
+      iat: time.now(),
+      "https://hasura.io/jwt/claims": {
+        "x-hasura-default-role": "user",
+        "x-hasura-allowed-roles": ["user"],
+        "x-hasura-user-id": user.id,
+      }
+    });
+    logger.log(jwt);
     return {
       isNewUser: isNewUser,
-      accessToken: await this.jwtService.signAsync({
-        sub: user.id,
-        phoneNumber: user.phone_number,
-        createdAt: time.now(),
-      })
+      accessToken: jwt
     }
 
   }
