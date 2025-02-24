@@ -1,8 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { IsNotEmpty } from 'class-validator';
 import { IsString } from 'class-validator';
-import { ApiBody, ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
+import { AuthGuard } from './auth.guard';
+import { AuthedRequest } from './authed-request.type';
 
 
 class SignInDto {
@@ -46,6 +48,12 @@ export class AuthController {
   @Post('verify-phone-number')
   verifyPhoneNumber(@Body() body: VerifyPhoneNumberDto) {
     return this.authService.verifyPhoneNumber(body.phoneNumber);
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('is-authenticated')
+  isAuthenticated(@Req() req: AuthedRequest) {
+    return req.user;
   }
 
 } 

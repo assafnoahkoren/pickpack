@@ -4,8 +4,7 @@ import parsePhoneNumber from 'libphonenumber-js'
 import { SmsService } from 'src/services/sms.service';
 import { JwtService } from '@nestjs/jwt';
 import { logger } from '@shared/logger';
-import { time } from '@shared/time';
-
+import { JwtPayload } from './jwt-payload.type';
 
 @Injectable()
 export class AuthService {
@@ -29,17 +28,18 @@ export class AuthService {
 
     const { user, isNewUser } = await this.findOrCreate(parsedPhoneNumber.number);
     logger.log(`User ${user.phone_number} signed in (${isNewUser ? 'new' : 'existing'})`);
-    const jwt = await this.jwtService.signAsync({
+    const jwtPayload: JwtPayload = {
       sub: user.id,
       phoneNumber: user.phone_number,
-      iat: time.now(),
       "https://hasura.io/jwt/claims": {
         "x-hasura-default-role": "user",
         "x-hasura-allowed-roles": ["user"],
         "x-hasura-user-id": user.id,
       }
+    }
+    const jwt = await this.jwtService.signAsync(jwtPayload, {
+      expiresIn: '365d',
     });
-    logger.log(jwt);
     return {
       isNewUser: isNewUser,
       accessToken: jwt
