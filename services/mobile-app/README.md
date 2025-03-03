@@ -18,6 +18,28 @@ yarn build
 yarn preview
 ```
 
+## Capacitor (Mobile Native App)
+
+```bash
+# After building the app
+yarn build
+
+# Sync changes with native projects
+yarn cap:sync
+
+# Add Android platform (already done)
+yarn cap:add:android
+
+# Add iOS platform (already done)
+yarn cap:add:ios
+
+# Open Android Studio
+yarn cap:open:android
+
+# Open Xcode
+yarn cap:open:ios
+```
+
 ## Project Structure
 
 ```
@@ -37,3 +59,4 @@ src/
 - React
 - TypeScript
 - Vite
+- Capacitor (iOS & Android)

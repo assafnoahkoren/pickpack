@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">PickPack</string>
+    <string name="title_activity_main">PickPack</string>
+    <string name="package_name">io.pickpack.app</string>
+    <string name="custom_url_scheme">io.pickpack.app</string>
+</resources>
