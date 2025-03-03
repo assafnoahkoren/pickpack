@@ -5,9 +5,6 @@ import { api } from '../api/api';
 export class AuthStore {
 	q_verifyPhoneNumber = api.auth.verifyPhoneNumber();
 	constructor() {
-		this.q_verifyPhoneNumber.mutate({
-			phoneNumber: '1234567890'
-		})
 		
 		makeAutoObservable(this);
 	}
