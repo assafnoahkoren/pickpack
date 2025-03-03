@@ -1,43 +1,28 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { ReactNode, useState } from 'react';
-import PublicRoutes from './PublicRoutes';
 import ProtectedRoutes from './ProtectedRoutes';
 
 // Import your app pages here
-// Example: import HomePage from '../pages/HomePage';
-// Example: import ProfilePage from '../pages/ProfilePage';
+import LoginPage from '../pages/LoginPage';
+import HomePage from '../pages/HomePage';
 
-interface RoutingLayerProps {
-  children?: ReactNode;
-}
-
-/**
- * RoutingLayer component that provides routing functionality for the application
- * using React Router. This component defines the available routes and their
- * corresponding components.
- */
-const RoutingLayer = ({ children }: RoutingLayerProps) => {
-  // In a real app, this would come from your auth context or state management
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  // For demo purposes only - toggle authentication
-  const toggleAuth = () => setIsAuthenticated(!isAuthenticated);
+const RoutingLayer = () => {
 
   return (
     <BrowserRouter>
       <Routes>
         {/* Protected routes (require authentication) */}
         <Route element={<ProtectedRoutes />}>
-          <Route path="/dashboard" element={<div>Dashboard Page</div>} />
-          <Route path="/profile" element={<div>Profile Page</div>} />
-          <Route path="/settings" element={<div>Settings Page</div>} />
+          <Route path="/home" element={<HomePage />} />
         </Route>
         
-        {/* Home page */}
-        <Route path="/" element={<div>Home Page - Public</div>} />
+        {/* Public routes - directly defined without a wrapper */}
+        <Route path="/login" element={<LoginPage />} />
         
-        {/* Fallback route - redirects to home page if no route matches */}
-        <Route path="*" element={<Navigate to="/" replace />} />
+        {/* Redirect root to login page */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        
+        {/* Fallback route - redirects to login page if no route matches */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
   );
