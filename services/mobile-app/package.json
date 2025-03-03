@@ -19,6 +19,7 @@
     "@capacitor/cli": "^7.0.1",
     "@capacitor/core": "^7.0.1",
     "@capacitor/ios": "^7.0.1",
+    "@capacitor/status-bar": "^7.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
