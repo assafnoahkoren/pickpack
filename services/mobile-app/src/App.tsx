@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import { showStatusBar, hideStatusBar } from './capacitor/statusBar'
+import RoutingLayer from './core/RoutingLayer'
 
 function App() {
   const [statusBarVisible, setStatusBarVisible] = useState(true)
@@ -16,16 +17,7 @@ function App() {
   }
 
   return (
-    <div className="app-container">
-      <h1>PickPack Mobile App</h1>
-      
-      <div className="controls">
-        <button onClick={toggleStatusBar}>
-          {statusBarVisible ? 'Hide Status Bar' : 'Show Status Bar'}
-        </button>
-        <p className="hint">This button only works on native mobile devices</p>
-      </div>
-    </div>
+    <RoutingLayer/>
   )
 }
 
