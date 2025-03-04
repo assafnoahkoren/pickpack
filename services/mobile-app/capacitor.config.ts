@@ -12,9 +12,12 @@ const config: CapacitorConfig = {
   plugins: {
     Keyboard: {
       resize: KeyboardResize.Body,
-      style: KeyboardStyle.Light,
       resizeOnFullScreen: true,
     },
+    StatusBar: {
+      overlaysWebView: true,
+      style: 'LIGHT'
+    }
   }
 };
 
