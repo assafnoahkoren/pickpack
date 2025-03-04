@@ -9,6 +9,7 @@ interface ThemeLayerProps {
 
 const theme = createTheme({
   primaryColor: 'blue',
+  fontFamily: 'Heebo, sans-serif',
   colors: {
     
   },

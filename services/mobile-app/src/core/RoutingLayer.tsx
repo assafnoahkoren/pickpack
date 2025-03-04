@@ -2,8 +2,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoutes from './ProtectedRoutes';
 
 // Import your app pages here
-import LoginPage from '../pages/LoginPage';
-import HomePage from '../pages/HomePage';
+import LoginPage from '../features/login/LoginPage';
+import HomePage from '../features/home/HomePage';
 
 const RoutingLayer = () => {
 
