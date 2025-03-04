@@ -53,7 +53,7 @@ export class AuthController {
   @UseGuards(AuthGuard)
   @Get('is-authenticated')
   isAuthenticated(@Req() req: AuthedRequest) {
-    return req.user;
+    return !!req.user;
   }
 
 } 
