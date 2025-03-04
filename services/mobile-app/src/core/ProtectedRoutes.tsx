@@ -26,7 +26,9 @@ const ProtectedRoutes = observer(({
   }
   
   // Redirect if not authenticated
-  if (!authStore.q_isAuthenticated.data?.isAuthenticated) {
+  console.log(`Guarding route. isAuthenticated: ${authStore.q_isAuthenticated.data}`);
+  
+  if (!authStore.q_isAuthenticated.data) {
     return <Navigate to={redirectPath} replace />;
   }
 

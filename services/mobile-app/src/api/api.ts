@@ -24,9 +24,13 @@ export const api = {
 				phoneNumber: string;
 				code: string;
 			}
+			type Response = {
+				isNewUser: boolean;
+				accessToken: string;
+			}
 			return createMobxMutation({
 				mutationFn: async (args: Args) => {
-					const response = await axios.post(`${API_BASE_URL}/api/v1/auth/sign-in`, { 
+					const response = await axios.post<Response>(`${API_BASE_URL}/api/v1/auth/sign-in`, { 
 						phoneNumber: args.phoneNumber,
 						code: args.code
 					});
