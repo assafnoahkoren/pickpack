@@ -66,7 +66,7 @@ const LoginPage = () => {
         <SwiperSlide className='p-4'>
           <Stack gap={4} className="bg-white p-4 rounded-2xl w-full h-full" align='center'>
             <Text className='self-start' fw="bold">טלפון</Text>
-            <Input className='w-full' variant='filled' size='md' placeholder="052-123-4567" leftSection={<IconPhone className='opacity-50' />}
+            <Input className='w-full' variant='filled' size='md' inputMode='tel' placeholder="052-123-4567" leftSection={<IconPhone className='opacity-50' />}
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
             />

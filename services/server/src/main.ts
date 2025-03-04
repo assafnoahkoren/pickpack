@@ -12,6 +12,7 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });
+  
   app.useGlobalPipes(new ValidationPipe());
   const port = process.env.PORT ?? 3000;
   const config = new DocumentBuilder()
@@ -22,7 +23,7 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, documentFactory);
 
-  await app.listen(port);
+  await app.listen(port, '0.0.0.0');
   logger.log(`Server is running on port ${port}`);
 }
 bootstrap();
