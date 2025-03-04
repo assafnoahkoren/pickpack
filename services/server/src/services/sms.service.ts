@@ -8,6 +8,9 @@ export class SmsService {
 
 	async sendVerificationCode(phoneNumber: string) {
 		logger.log(`Sending verification code to ${phoneNumber}`);
+		if (process.env.SKIP_AUTH === 'true') {
+			return true;
+		}
 		return getTwilioServices()
 			.verifications
 			.create({ to: phoneNumber, channel: 'sms' })

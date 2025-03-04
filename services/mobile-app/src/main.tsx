@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 import { initializeStatusBar } from './capacitor/statusBar'
-
+import 'virtual:uno.css'
 // Initialize Capacitor plugins
 document.addEventListener('DOMContentLoaded', () => {
   initializeStatusBar();
