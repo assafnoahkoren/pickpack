@@ -1,4 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
+import { authContext } from '../global-stores/auth-store';
+
 
 interface ProtectedRoutesProps {
   /**
@@ -12,16 +15,23 @@ interface ProtectedRoutesProps {
  * Handles routes that require authentication
  * If user is not authenticated, redirects to specified path
  */
-const ProtectedRoutes = ({ 
+const ProtectedRoutes = observer(({ 
   redirectPath = '/login' 
 }: ProtectedRoutesProps) => {
-  const isAuthenticated = true;
-  if (!isAuthenticated) {
+  const authStore = authContext.use();
+  
+  // Show loading state if auth status is loading
+  if (authStore.q_isAuthenticated.isLoading) {
+    return <div>Loading authentication status...</div>;
+  }
+  
+  // Redirect if not authenticated
+  if (!authStore.q_isAuthenticated.data?.isAuthenticated) {
     return <Navigate to={redirectPath} replace />;
   }
 
   // Otherwise, render child routes
   return <Outlet />;
-};
+});
 
 export default ProtectedRoutes; 
