@@ -483,6 +483,11 @@
   resolved "https://registry.npmjs.org/@capacitor/ios/-/ios-7.0.1.tgz"
   integrity sha512-RN6S1C1k7ue57DFmJM4EizzsYBrahTTiMhcnlHspFLaojgHbFWZbYq1VriuRKysPU1ka/P+klsdtRFsB5K9jyw==
 
+"@capacitor/keyboard@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@capacitor/keyboard/-/keyboard-7.0.0.tgz#c31dcda3faa4158dc63da07e17e8c1ec31382e6d"
+  integrity sha512-Tqwy8wG+sx4UqiFCX4Q+bFw6uKgG7BiHKAPpeefoIgoEB8H8Jf3xZNZoVPnJIMuPsCdSvuyHXZbJXH9IEEirGA==
+
 "@capacitor/status-bar@^7.0.0":
   version "7.0.0"
   resolved "https://registry.npmjs.org/@capacitor/status-bar/-/status-bar-7.0.0.tgz"
