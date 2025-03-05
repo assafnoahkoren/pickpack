@@ -14,28 +14,45 @@ datasource db {
 }
 
 model User {
-  id                  String   @id @default(uuid())
-  full_name           String?
+  id                  String         @id @default(uuid())
+  email               String
+  full_name           String
   profile_picture_url String?
-  phone_number        String   @unique
+  phone_number        String         @unique
   city_id             Int?
-  city                City?     @relation(fields: [city_id], references: [id])
-  created_at          DateTime @default(now())
-  updated_at          DateTime @updatedAt
-  ratings_created     Rating[] @relation("ratings_created")
-  ratings_received    Rating[] @relation("ratings_received")
+  city                City?          @relation(fields: [city_id], references: [id])
+  created_at          DateTime       @default(now())
+  updated_at          DateTime       @updatedAt
+  ratings_created     Rating[]       @relation("ratings_created")
+  ratings_received    Rating[]       @relation("ratings_received")
+  favorite_cities     FavoriteCity[]
 }
 
 model City {
-  id         Int                                  @id
-  name       String
-  country    String
-  coords     Unsupported("geometry(Point, 4326)")
-  created_at DateTime                             @default(now())
-  updated_at DateTime                             @updatedAt
-  User       User[]
+  id              Int                                  @id
+  name            String
+  country         String
+  coords          Unsupported("geometry(Point, 4326)")
+  created_at      DateTime                             @default(now())
+  updated_at      DateTime                             @updatedAt
+  User            User[]
+  favorite_cities FavoriteCity[]
 
   @@index([coords], name: "location_idx", type: Gist)
+}
+
+model FavoriteCity {
+  id         String    @id @default(uuid())
+  user       User      @relation(fields: [user_id], references: [id])
+  user_id    String
+  city       City      @relation(fields: [city_id], references: [id])
+  city_id    Int
+  created_at DateTime  @default(now())
+  deleted_at DateTime?
+
+  @@unique([user_id, city_id])
+  @@index([user_id])
+  @@index([city_id])
 }
 
 model Rating {
