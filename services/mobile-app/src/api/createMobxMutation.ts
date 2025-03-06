@@ -2,7 +2,6 @@ import {
 	MutationObserver, 
 	MutationObserverOptions, 
 	MutationObserverResult,
-	QueryClient
   } from '@tanstack/react-query'
   import { makeAutoObservable, runInAction } from 'mobx'
 import { queryClient } from '../core/QueryLayer'

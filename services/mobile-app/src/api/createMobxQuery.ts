@@ -1,7 +1,6 @@
 // createMobxQuery.ts
 import { makeAutoObservable, runInAction } from 'mobx'
 import { 
-  QueryClient, 
   QueryObserver, 
   QueryObserverOptions, 
   QueryObserverResult 
