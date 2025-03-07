@@ -1,9 +1,9 @@
-name: Server Deploy
+name: Client Deploy
 
 on:
   push:
     paths:
-      - 'services/server/**'
+      - 'services/mobile-app/**'
     branches:
       - main
 
@@ -14,6 +14,6 @@ jobs:
       - name: Deploy to development
         uses: johnbeynon/render-deploy-action@v0.0.8
         with:
-          service-id: ${{ secrets.RENDER_SERVER_SERVICE_ID }}
+          service-id: ${{ secrets.RENDER_CLIENT_SERVICE_ID }}
           api-key: ${{ secrets.RENDER_API_KEY }}
           wait-for-success: true

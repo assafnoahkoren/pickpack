@@ -8,20 +8,33 @@ import OtpInput from 'react-otp-input';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { queryClient } from '../../core/QueryLayer';
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
+
 const LoginPage = () => {
   const authStore = authContext.use();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [otp, setOtp] = useState('');
   const swiperRef = useRef<SwiperClass>(null);
   const navigate = useNavigate();
+  console.log('phoneNumber', phoneNumber);
+  const parsedPhone = parsePhoneNumberFromString(phoneNumber, 'IL');
+
 
   const verifyPhone = async () => {
-    await authStore.m_verifyPhoneNumber.mutate({ phoneNumber: phoneNumber });
+    if (!parsedPhone?.isValid()) {
+      return;
+    }
+    console.log('verifyPhone', parsedPhone?.number);
+    
+    await authStore.m_verifyPhoneNumber.mutate({ phoneNumber: parsedPhone?.number });
     swiperRef.current?.slideNext();
   }
 
   const signIn = async () => {
-    const result = await authStore.m_signIn.mutate({ phoneNumber: phoneNumber, code: otp });
+    if (!parsedPhone?.isValid()) {
+      return;
+    }
+    const result = await authStore.m_signIn.mutate({ phoneNumber: parsedPhone?.number, code: otp });
     if (result.accessToken) {
       localStorage.setItem('accessToken', result.accessToken);
       axios.defaults.headers.common['Authorization'] = `Bearer ${result.accessToken}`;
