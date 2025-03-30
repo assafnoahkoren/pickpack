@@ -5,6 +5,7 @@ import { IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { AuthGuard } from './auth.guard';
 import { AuthedRequest } from './authed-request.type';
+import prisma from '@db/prisma-client';
 
 
 class SignInDto {
@@ -54,6 +55,17 @@ export class AuthController {
   @Get('is-authenticated')
   isAuthenticated(@Req() req: AuthedRequest) {
     return !!req.user;
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('me')
+  getMe(@Req() req: AuthedRequest) {
+    const user = prisma.user.findUnique({
+      where: {
+        id: req.user.sub
+      }
+    });
+    return user;
   }
 
 } 

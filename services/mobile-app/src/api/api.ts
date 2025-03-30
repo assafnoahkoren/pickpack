@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createMobxMutation } from "./createMobxMutation";
 import { createMobxQuery } from "./createMobxQuery";
-
+import { DB } from "@db/prisma-client";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const api = {
@@ -43,6 +43,15 @@ export const api = {
 				queryKey: ['auth', 'isAuthenticated'],
 				queryFn: async () => {
 					const response = await axios.get(`${API_BASE_URL}/api/v1/auth/is-authenticated`);
+					return response.data;
+				}
+			})
+		},
+		me: () => {
+			return createMobxQuery({
+				queryKey: ['auth', 'me'],
+				queryFn: async () => {
+					const response = await axios.get<DB.User>(`${API_BASE_URL}/api/v1/auth/me`);
 					return response.data;
 				}
 			})

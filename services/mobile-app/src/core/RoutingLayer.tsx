@@ -4,6 +4,7 @@ import ProtectedRoutes from './ProtectedRoutes';
 // Import your app pages here
 import LoginPage from '../features/login/LoginPage';
 import HomePage from '../features/home/HomePage';
+import OnboardingPage from '../features/onboarding/onboarding-page';
 
 const RoutingLayer = () => {
 

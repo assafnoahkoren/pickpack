@@ -17,13 +17,13 @@ const theme = createTheme({
   radius: {
     md: '12px',
   },
-  
+
   components: {
 	Button: {
 		defaultProps: {
 			radius: 'xl',
 		}
-	}
+	},
   }
 });
 

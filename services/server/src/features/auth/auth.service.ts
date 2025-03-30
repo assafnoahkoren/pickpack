@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import prisma from '@db/prisma-client';
+import prisma, { DB } from '@db/prisma-client';
 import parsePhoneNumber from 'libphonenumber-js'
 import { SmsService } from 'src/services/sms.service';
 import { JwtService } from '@nestjs/jwt';
@@ -28,7 +28,25 @@ export class AuthService {
 
     const { user, isNewUser } = await this.findOrCreate(parsedPhoneNumber.number);
     logger.log(`User ${user.phone_number} signed in (${isNewUser ? 'new' : 'existing'})`);
-    const jwtPayload: JwtPayload = {
+    
+    const accessToken = await this.createAccessToken(user);
+    
+    return {
+      isNewUser: isNewUser,
+      accessToken
+    }
+  }
+
+  private async createAccessToken(user: DB.User) {
+    const jwtPayload = this.createJwtPayload(user);
+    
+    return this.jwtService.signAsync(jwtPayload, {
+      expiresIn: '365d',
+    });
+  }
+
+  private createJwtPayload(user: DB.User): JwtPayload {
+    return {
       sub: user.id,
       phoneNumber: user.phone_number,
       "https://hasura.io/jwt/claims": {
@@ -36,15 +54,7 @@ export class AuthService {
         "x-hasura-allowed-roles": ["user"],
         "x-hasura-user-id": user.id,
       }
-    }
-    const jwt = await this.jwtService.signAsync(jwtPayload, {
-      expiresIn: '365d',
-    });
-    return {
-      isNewUser: isNewUser,
-      accessToken: jwt
-    }
-
+    };
   }
 
   private parsePhoneNumber(phoneNumber: string) {

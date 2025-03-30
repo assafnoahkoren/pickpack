@@ -1,10 +1,13 @@
 import { ReactNode } from 'react';
 import { authContext } from './auth-store';
+import { userContext } from './user-store';
 
 export function GlobalStoresLayer({ children }: { children: ReactNode }) {
   return (
     <authContext.Provider>
-      {children}
+      <userContext.Provider>
+      	{children}
+      </userContext.Provider>
     </authContext.Provider>
   );
 }
